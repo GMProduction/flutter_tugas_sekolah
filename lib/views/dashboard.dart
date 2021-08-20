@@ -86,10 +86,16 @@ class _DashboardState extends State<Dashboard> {
                               children: DataDummies.materiDummy.map((e) {
                                 return Container(
                                   margin: EdgeInsets.only(bottom: 10),
-                                  child: CardMateri(
-                                    nama: e["nama"].toString(),
-                                    deskripsi: e["deskripsi"].toString(),
-                                    buttonText: "Kerjakan Tugas",
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      Navigator.pushNamed(
+                                          context, "/detail-tugas");
+                                    },
+                                    child: CardMateri(
+                                      nama: e["nama"].toString(),
+                                      deskripsi: e["deskripsi"].toString(),
+                                      buttonText: "Kerjakan Tugas",
+                                    ),
                                   ),
                                 );
                               }).toList(),
