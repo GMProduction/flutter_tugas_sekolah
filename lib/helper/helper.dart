@@ -132,6 +132,53 @@ class DataDummies {
     },
   ];
 
+  static List<Map<String, dynamic>> aktivitasDummy = [
+    {
+      "id": 1,
+      "tanggal": "20-03-2001",
+      "surat": "Alfatihah",
+      "sholat": [
+        {"nama": "shubuh"},
+        {"nama": "isya"},
+        {"nama": "maghrib"},
+      ],
+    },
+    {
+      "id": 2,
+      "tanggal": "21-03-2001",
+      "surat": "Al-Ikhlas",
+      "sholat": [
+        {"nama": "dzuhur"},
+        {"nama": "ashar"},
+        {"nama": "subuh"},
+        {"nama": "isya"},
+        {"nama": "maghrib"},
+      ],
+    },
+    {
+      "id": 3,
+      "tanggal": "22-03-2001",
+      "surat": "Alfatihah",
+      "sholat": [
+        {"nama": "isya"},
+        {"nama": "maghrib"},
+      ],
+    },
+    {
+      "id": 4,
+      "tanggal": "23-03-2001",
+      "surat": "Alfatihah",
+      "sholat": [
+        {"nama": "subuh"},
+        {"nama": "isya"},
+        {"nama": "maghrib"},
+        {"nama": "dzuhur"},
+      ],
+    },
+  ];
+
+  static List<String> sholat = ["subuh", "ashar", "dzuhur", "maghrib", "isya"];
+
   static List<Map<String, dynamic>> historyDummy = [
     {
       "id": 3,

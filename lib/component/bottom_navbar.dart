@@ -62,8 +62,8 @@ class BottomNavbar extends StatelessWidget {
           GestureDetector(
             onTap: () {
               String current = ModalRoute.of(context)!.settings.name!;
-              if (current != "/history") {
-                Navigator.pushNamed(context, "/history");
+              if (current != "/aktivitas") {
+                Navigator.pushNamed(context, "/aktivitas");
               }
             },
             child: Icon(
@@ -75,8 +75,8 @@ class BottomNavbar extends StatelessWidget {
           GestureDetector(
             onTap: () {
               String current = ModalRoute.of(context)!.settings.name!;
-              if (current != "/profil") {
-                Navigator.pushNamed(context, "/profil");
+              if (current != "/dashboard") {
+                Navigator.pushNamed(context, "/dashboard");
               }
             },
             child: Icon(
