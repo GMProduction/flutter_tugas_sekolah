@@ -29,7 +29,7 @@ class CardAktivitas extends StatelessWidget {
               offset: Offset(2, 2))
         ],
       ),
-      height: 120,
+      height: 100,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

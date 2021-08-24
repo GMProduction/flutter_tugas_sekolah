@@ -16,7 +16,9 @@ class _AktivitasState extends State<Aktivitas> {
       floatingActionButton: Align(
         alignment: Alignment(1, 0.8),
         child: FloatingActionButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.pushNamed(context, "/aktivitas-baru");
+          },
           child: Icon(
             Icons.add,
           ),
@@ -59,7 +61,7 @@ class _AktivitasState extends State<Aktivitas> {
                 },
                 child: Container(
                   width: MediaQuery.of(context).size.width,
-                  padding: EdgeInsets.symmetric(horizontal: 20),
+                  padding: EdgeInsets.only(left: 20, right: 20, top: 20),
                   child: LayoutBuilder(
                     builder: (context, constraints) => SingleChildScrollView(
                       physics: AlwaysScrollableScrollPhysics(),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tugas_sekolah/views/aktivitas.dart';
+import 'package:tugas_sekolah/views/aktivitas_baru.dart';
 import 'package:tugas_sekolah/views/dashboard.dart';
 import 'package:tugas_sekolah/views/detail_materi.dart';
 import 'package:tugas_sekolah/views/detail_tugas.dart';
@@ -31,6 +32,7 @@ class MyApp extends StatelessWidget {
         "/detail-materi": (context) => DetailMateri(),
         "/detail-tugas": (context) => DetailTugas(),
         "/aktivitas": (context) => Aktivitas(),
+        "/aktivitas-baru": (context) => AktivitasBaru(),
       },
     );
   }
