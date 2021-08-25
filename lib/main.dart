@@ -6,6 +6,7 @@ import 'package:tugas_sekolah/views/detail_materi.dart';
 import 'package:tugas_sekolah/views/detail_tugas.dart';
 import 'package:tugas_sekolah/views/login.dart';
 import 'package:tugas_sekolah/views/materi.dart';
+import 'package:tugas_sekolah/views/profil.dart';
 import 'package:tugas_sekolah/views/tugas.dart';
 import 'package:tugas_sekolah/views/welcome.dart';
 
@@ -33,6 +34,7 @@ class MyApp extends StatelessWidget {
         "/detail-tugas": (context) => DetailTugas(),
         "/aktivitas": (context) => Aktivitas(),
         "/aktivitas-baru": (context) => AktivitasBaru(),
+        "/profil": (context) => Profil(),
       },
     );
   }
