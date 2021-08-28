@@ -1,4 +1,7 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tugas_sekolah/component/bottom_navbar.dart';
 import 'package:tugas_sekolah/component/card_aktivitas.dart';
 import 'package:tugas_sekolah/helper/helper.dart';
@@ -9,6 +12,52 @@ class Aktivitas extends StatefulWidget {
 }
 
 class _AktivitasState extends State<Aktivitas> {
+  bool isLoading = true;
+  List<dynamic> _listAktivitas = [];
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    fetchAktivitas();
+  }
+
+  void fetchAktivitas() async {
+    try {
+      setState(() {
+        isLoading = true;
+      });
+      SharedPreferences preferences = await SharedPreferences.getInstance();
+      String token = preferences.getString("token") ?? "";
+      final response = await Dio().get(
+        '$HostAddress/aktivitas',
+        options: Options(
+          headers: {
+            "Authorization": "Bearer $token",
+            "Accept": "application/json"
+          },
+        ),
+      );
+      print(response.data);
+      setState(() {
+        _listAktivitas = response.data;
+      });
+    } on DioError catch (e) {
+      print(e.response!.data);
+      Fluttertoast.showToast(
+          msg: "Gagal Mengambil Data...",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 16.0);
+    }
+    setState(() {
+      isLoading = false;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -56,30 +105,44 @@ class _AktivitasState extends State<Aktivitas> {
             ),
             Expanded(
               child: RefreshIndicator(
-                onRefresh: () {
-                  return Future.delayed(const Duration(seconds: 2));
+                onRefresh: () async {
+                  fetchAktivitas();
                 },
-                child: Container(
-                  width: MediaQuery.of(context).size.width,
-                  padding: EdgeInsets.only(left: 20, right: 20, top: 20),
-                  child: LayoutBuilder(
-                    builder: (context, constraints) => SingleChildScrollView(
-                      physics: AlwaysScrollableScrollPhysics(),
-                      child: Column(
-                        children: DataDummies.aktivitasDummy.map((e) {
-                          return Container(
-                            margin: EdgeInsets.only(bottom: 10),
-                            child: CardAktivitas(
-                              tanggal: e["tanggal"].toString(),
-                              surat: e["surat"].toString(),
-                              sholat: e["sholat"],
+                child: isLoading
+                    ? Container(
+                        height: double.infinity,
+                        width: double.infinity,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            CircularProgressIndicator(),
+                            Text("Sedang Mengunduh Data...")
+                          ],
+                        ),
+                      )
+                    : Container(
+                        width: MediaQuery.of(context).size.width,
+                        padding: EdgeInsets.only(left: 20, right: 20, top: 20),
+                        child: LayoutBuilder(
+                          builder: (context, constraints) =>
+                              SingleChildScrollView(
+                            physics: AlwaysScrollableScrollPhysics(),
+                            child: Column(
+                              children: _listAktivitas.map((e) {
+                                return Container(
+                                  margin: EdgeInsets.only(bottom: 10),
+                                  child: CardAktivitas(
+                                    tanggal: e["tanggal"].toString(),
+                                    surat: e["surat"].toString(),
+                                    sholat: e["sholat"],
+                                  ),
+                                );
+                              }).toList(),
                             ),
-                          );
-                        }).toList(),
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
-                ),
               ),
             ),
             BottomNavbar(

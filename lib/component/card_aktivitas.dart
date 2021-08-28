@@ -75,9 +75,7 @@ class CardAktivitas extends StatelessWidget {
                     bool active = false;
                     if (anu.isNotEmpty) {
                       active = true;
-                      print("enek Bos");
                     }
-                    print(this.sholat);
                     return Expanded(
                       flex: 1,
                       child: Container(

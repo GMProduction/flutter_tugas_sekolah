@@ -7,6 +7,7 @@ import 'package:tugas_sekolah/views/detail_tugas.dart';
 import 'package:tugas_sekolah/views/login.dart';
 import 'package:tugas_sekolah/views/materi.dart';
 import 'package:tugas_sekolah/views/profil.dart';
+import 'package:tugas_sekolah/views/register.dart';
 import 'package:tugas_sekolah/views/tugas.dart';
 import 'package:tugas_sekolah/views/welcome.dart';
 
@@ -27,6 +28,7 @@ class MyApp extends StatelessWidget {
       routes: {
         "/": (context) => Welcome(),
         "/login": (context) => Login(),
+        "/register": (context) => Register(),
         "/dashboard": (context) => Dashboard(),
         "/materi": (context) => Materi(),
         "/tugas": (context) => Tugas(),

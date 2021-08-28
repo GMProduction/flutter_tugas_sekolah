@@ -23,8 +23,8 @@ class _WelcomeState extends State<Welcome> {
     if (token != null) {
       Navigator.popAndPushNamed(context, "/dashboard");
     } else {
-      // Navigator.popAndPushNamed(context, "/login");
-      Navigator.popAndPushNamed(context, "/dashboard");
+      Navigator.popAndPushNamed(context, "/login");
+      // Navigator.popAndPushNamed(context, "/dashboard");
     }
   }
 

@@ -1,4 +1,8 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tugas_sekolah/helper/helper.dart';
 
 class AktivitasBaru extends StatefulWidget {
   @override
@@ -13,8 +17,10 @@ class _AktivitasBaruState extends State<AktivitasBaru> {
     "maghrib": false,
     "isya": false,
   };
+  bool isLoading = false;
+  String surat = "";
 
-  void _simpan() {
+  void _simpan() async {
     late List<String> _tmpSholat = [];
     sholat.keys.forEach((element) {
       if (sholat[element] == true) {
@@ -22,6 +28,47 @@ class _AktivitasBaruState extends State<AktivitasBaru> {
       }
     });
     print(_tmpSholat);
+    setState(() {
+      isLoading = true;
+    });
+    try {
+      String url = "$HostAddress/aktivitas/store";
+      SharedPreferences preferences = await SharedPreferences.getInstance();
+      String token = preferences.getString("token") ?? "";
+      print(token);
+      Map<String, dynamic> data = {"surat": surat, "sholat": _tmpSholat};
+      final response = await Dio().post(
+        url,
+        data: data,
+        options: Options(
+          headers: {
+            "Authorization": "Bearer $token",
+            "Accept": "application/json"
+          },
+        ),
+      );
+      Navigator.restorablePopAndPushNamed(context, "/aktivitas");
+      // Navigator.pushNamedAndRemoveUntil(
+      //   context,
+      //   "/dashboard",
+      //   ModalRoute.withName("/dashboard"),
+      // );
+      print(response.data);
+    } on DioError catch (e) {
+      print(e.response!.data);
+      Fluttertoast.showToast(
+          msg: "Terjadi Kesalahan Pada Server...",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.black,
+          textColor: Colors.white,
+          fontSize: 16.0);
+    }
+
+    setState(() {
+      isLoading = false;
+    });
   }
 
   @override
@@ -67,7 +114,11 @@ class _AktivitasBaruState extends State<AktivitasBaru> {
                     child: Text("Hafalan Surat"),
                   ),
                   TextField(
-                    onChanged: (text) {},
+                    onChanged: (text) {
+                      setState(() {
+                        surat = text;
+                      });
+                    },
                     decoration: InputDecoration(
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
@@ -132,14 +183,37 @@ class _AktivitasBaruState extends State<AktivitasBaru> {
                     borderRadius: BorderRadius.circular(20),
                   ),
                   child: Center(
-                    child: Text(
-                      "Simpan",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20,
-                      ),
-                    ),
+                    child: isLoading
+                        ? Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              SizedBox(
+                                height: 14,
+                                width: 14,
+                                child: CircularProgressIndicator(
+                                  color: Colors.white,
+                                ),
+                              ),
+                              SizedBox(
+                                width: 5,
+                              ),
+                              Text(
+                                "Sedang Menyimpan Aktivitas..",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 14,
+                                ),
+                              )
+                            ],
+                          )
+                        : Text(
+                            "Simpan",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20,
+                            ),
+                          ),
                   ),
                 ),
               ),

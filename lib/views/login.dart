@@ -23,7 +23,10 @@ class _LoginState extends State<Login> {
       setState(() {
         isLoading = true;
       });
-      Map<String, dynamic> params = {"username": username, "password": "siswa"};
+      Map<String, dynamic> params = {
+        "username": username,
+        "password": password
+      };
       var formData = FormData.fromMap(params);
       final response = await Dio().post(
         '$HostAddress/login',
@@ -77,104 +80,140 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Center(
-            child: Container(
-                margin: EdgeInsets.only(bottom: 10),
-                child: CircleLogo(image: BaseAvatar)),
-          ),
-          Text(
-            "Selamat Datang Di Sistem Informasi Ujian Online",
-            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-          ),
-          Container(
-            padding: EdgeInsets.only(left: 20, right: 20, top: 30, bottom: 20),
-            child: TextField(
-              onChanged: (text) {
-                setState(() {
-                  username = text;
-                });
-              },
-              decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
+      body: SafeArea(
+        child: Container(
+          height: MediaQuery.of(context).size.height,
+          child: Center(
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Center(
+                    child: Container(
+                        margin: EdgeInsets.only(bottom: 10),
+                        child: CircleLogo(image: BaseAvatar)),
                   ),
-                  contentPadding: EdgeInsets.symmetric(horizontal: 10),
-                  prefixIcon: Icon(Icons.account_circle),
-                  hintText: "Username"),
-            ),
-          ),
-          Container(
-            padding: EdgeInsets.only(left: 20, right: 20, bottom: 20),
-            child: TextField(
-              onChanged: (text) {
-                setState(() {
-                  password = text;
-                });
-              },
-              obscureText: true,
-              decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10)),
-                  contentPadding: EdgeInsets.symmetric(horizontal: 10),
-                  prefixIcon: Icon(Icons.lock),
-                  hintText: "Password"),
-            ),
-          ),
-          Container(
-            padding: EdgeInsets.symmetric(horizontal: 20),
-            child: GestureDetector(
-              onTap: () {
-                if (!isLoading) {
-                  login();
-                }
-              },
-              child: Container(
-                height: 60,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: Colors.lightBlue,
-                ),
-                child: Center(
-                  child: isLoading
-                      ? Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            SizedBox(
-                              width: 20,
-                              height: 20,
-                              child: CircularProgressIndicator(
-                                color: Colors.white,
-                                strokeWidth: 1,
-                              ),
-                            ),
-                            SizedBox(
-                              width: 5,
-                            ),
-                            Text(
-                              "loading...",
-                              style: TextStyle(
-                                  fontSize: 18,
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                          ],
-                        )
-                      : Text(
-                          "Login",
-                          style: TextStyle(
-                              fontSize: 18,
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold),
+                  Text(
+                    "Selamat Datang Di Sistem Informasi Ujian Online",
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  ),
+                  Container(
+                    padding: EdgeInsets.only(
+                        left: 20, right: 20, top: 30, bottom: 20),
+                    child: TextField(
+                      onChanged: (text) {
+                        setState(() {
+                          username = text;
+                        });
+                      },
+                      decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          contentPadding: EdgeInsets.symmetric(horizontal: 10),
+                          prefixIcon: Icon(Icons.account_circle),
+                          hintText: "NIS"),
+                    ),
+                  ),
+                  Container(
+                    padding: EdgeInsets.only(left: 20, right: 20, bottom: 20),
+                    child: TextField(
+                      onChanged: (text) {
+                        setState(() {
+                          password = text;
+                        });
+                      },
+                      obscureText: true,
+                      decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10)),
+                          contentPadding: EdgeInsets.symmetric(horizontal: 10),
+                          prefixIcon: Icon(Icons.lock),
+                          hintText: "Password"),
+                    ),
+                  ),
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: 20),
+                    child: GestureDetector(
+                      onTap: () {
+                        if (!isLoading) {
+                          login();
+                        }
+                      },
+                      child: Container(
+                        height: 60,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: Colors.lightBlue,
                         ),
-                ),
+                        child: Center(
+                          child: isLoading
+                              ? Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    SizedBox(
+                                      width: 20,
+                                      height: 20,
+                                      child: CircularProgressIndicator(
+                                        color: Colors.white,
+                                        strokeWidth: 1,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: 5,
+                                    ),
+                                    Text(
+                                      "loading...",
+                                      style: TextStyle(
+                                          fontSize: 18,
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ],
+                                )
+                              : Text(
+                                  "Login",
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(top: 10),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "Belum Punya Akun?",
+                        ),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.pushNamed(context, "/register");
+                          },
+                          child: Text(
+                            "Daftar Disini",
+                            style: TextStyle(
+                              decoration: TextDecoration.underline,
+                              color: Colors.lightBlue,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
               ),
             ),
-          )
-        ],
+          ),
+        ),
       ),
     );
   }

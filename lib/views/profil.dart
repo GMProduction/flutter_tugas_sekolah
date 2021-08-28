@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tugas_sekolah/component/line_chart.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 
@@ -29,6 +30,16 @@ class _ProfilState extends State<Profil> {
     ];
   }
 
+  void logout() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    preferences.remove("token");
+    Navigator.pushNamedAndRemoveUntil(
+      context,
+      "/login",
+      ModalRoute.withName("/login"),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,15 +51,28 @@ class _ProfilState extends State<Profil> {
               height: MediaQuery.of(context).size.height * 0.07,
               width: MediaQuery.of(context).size.width,
               padding: EdgeInsets.symmetric(horizontal: 20),
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  "Profil Siswa",
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "Profil Siswa",
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                ),
+                  GestureDetector(
+                    onTap: () {
+                      logout();
+                    },
+                    child: Row(
+                      children: [
+                        Icon(Icons.close),
+                        Text("Logout"),
+                      ],
+                    ),
+                  )
+                ],
               ),
               decoration: BoxDecoration(
                 color: Colors.white,

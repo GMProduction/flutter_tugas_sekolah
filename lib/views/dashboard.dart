@@ -1,4 +1,6 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:tugas_sekolah/component/bottom_navbar.dart';
 import 'package:tugas_sekolah/component/card_materi.dart';
 import 'package:tugas_sekolah/component/profile_navbar.dart';
@@ -10,6 +12,96 @@ class Dashboard extends StatefulWidget {
 }
 
 class _DashboardState extends State<Dashboard> {
+  bool isLoadingMateri = true;
+  bool isLoadingTugas = true;
+  List<dynamic> _listMateri = [];
+  List<dynamic> _listTugas = [];
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    fetchMateri();
+    fetchTugas();
+  }
+
+  void fetchMateri() async {
+    try {
+      setState(() {
+        isLoadingMateri = true;
+      });
+      String url = "$HostAddress/materi-now";
+      String _token = await GetToken();
+      final response = await Dio().get(
+        url,
+        options: Options(
+          headers: {
+            "Authorization": "Bearer $_token",
+            "Accept": "application/json"
+          },
+        ),
+      );
+      final data = response.data as List;
+      print(response.data);
+      setState(() {
+        _listMateri = data;
+      });
+    } on DioError catch (e) {
+      Fluttertoast.showToast(
+          msg: "Gagal Mengambil Data Materi...",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 16.0);
+    }
+    setState(() {
+      isLoadingMateri = false;
+    });
+  }
+
+  void fetchTugas() async {
+    try {
+      setState(() {
+        isLoadingTugas = true;
+      });
+      String url = "$HostAddress/tugas-now";
+      String _token = await GetToken();
+      final response = await Dio().get(
+        url,
+        options: Options(
+          headers: {
+            "Authorization": "Bearer $_token",
+            "Accept": "application/json"
+          },
+        ),
+      );
+      final data = response.data as List;
+      print(response.data);
+      setState(() {
+        _listTugas = data;
+      });
+    } on DioError catch (e) {
+      Fluttertoast.showToast(
+          msg: "Gagal Mengambil Data Materi...",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 16.0);
+    }
+    setState(() {
+      isLoadingTugas = false;
+    });
+  }
+
+  refresh() async {
+    fetchMateri();
+    fetchTugas();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,7 +117,7 @@ class _DashboardState extends State<Dashboard> {
             Expanded(
               child: RefreshIndicator(
                 onRefresh: () {
-                  return Future.delayed(const Duration(seconds: 1));
+                  return refresh();
                 },
                 child: Container(
                   width: MediaQuery.of(context).size.width,
@@ -50,24 +142,37 @@ class _DashboardState extends State<Dashboard> {
                           Container(
                             margin: EdgeInsets.only(bottom: 20),
                             padding: EdgeInsets.only(right: 10),
-                            child: Column(
-                              children: DataDummies.materiDummy.map((e) {
-                                return Container(
-                                  margin: EdgeInsets.only(bottom: 10),
-                                  child: GestureDetector(
-                                    onTap: () {
-                                      Navigator.pushNamed(
-                                          context, '/detail-materi');
-                                    },
-                                    child: CardMateri(
-                                      nama: e["nama"].toString(),
-                                      deskripsi: e["deskripsi"].toString(),
-                                      buttonText: "Lihat Materi",
+                            child: isLoadingMateri
+                                ? Container(
+                                    height: 120,
+                                    child: Center(
+                                      child: SizedBox(
+                                        height: 24,
+                                        width: 24,
+                                        child: CircularProgressIndicator(),
+                                      ),
                                     ),
+                                  )
+                                : Column(
+                                    children: _listMateri.map((e) {
+                                      return Container(
+                                        margin: EdgeInsets.only(bottom: 10),
+                                        child: GestureDetector(
+                                          onTap: () {
+                                            Navigator.pushNamed(
+                                                context, '/detail-materi',
+                                                arguments: e["id"].toString());
+                                          },
+                                          child: CardMateri(
+                                            nama: e["nama"].toString(),
+                                            deskripsi:
+                                                e["deskripsi"].toString(),
+                                            buttonText: "Lihat Materi",
+                                          ),
+                                        ),
+                                      );
+                                    }).toList(),
                                   ),
-                                );
-                              }).toList(),
-                            ),
                           ),
                           Container(
                             margin: EdgeInsets.only(bottom: 20),
@@ -82,24 +187,37 @@ class _DashboardState extends State<Dashboard> {
                           Container(
                             margin: EdgeInsets.only(bottom: 20),
                             padding: EdgeInsets.only(right: 10),
-                            child: Column(
-                              children: DataDummies.materiDummy.map((e) {
-                                return Container(
-                                  margin: EdgeInsets.only(bottom: 10),
-                                  child: GestureDetector(
-                                    onTap: () {
-                                      Navigator.pushNamed(
-                                          context, "/detail-tugas");
-                                    },
-                                    child: CardMateri(
-                                      nama: e["nama"].toString(),
-                                      deskripsi: e["deskripsi"].toString(),
-                                      buttonText: "Kerjakan Tugas",
+                            child: isLoadingTugas
+                                ? Container(
+                                    height: 120,
+                                    child: Center(
+                                      child: SizedBox(
+                                        height: 24,
+                                        width: 24,
+                                        child: CircularProgressIndicator(),
+                                      ),
                                     ),
+                                  )
+                                : Column(
+                                    children: _listTugas.map((e) {
+                                      return Container(
+                                        margin: EdgeInsets.only(bottom: 10),
+                                        child: GestureDetector(
+                                          onTap: () {
+                                            Navigator.pushNamed(
+                                                context, '/detail-tugas',
+                                                arguments: e["id"].toString());
+                                          },
+                                          child: CardMateri(
+                                            nama: e["nama"].toString(),
+                                            deskripsi:
+                                                e["deskripsi"].toString(),
+                                            buttonText: "Kerjakan Tugas",
+                                          ),
+                                        ),
+                                      );
+                                    }).toList(),
                                   ),
-                                );
-                              }).toList(),
-                            ),
                           ),
                         ],
                       ),
