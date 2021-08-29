@@ -41,7 +41,7 @@ class ProfileNavbar extends StatelessWidget {
                     fontWeight: FontWeight.bold),
               ),
               Text(
-                "${this.nama} (${this.kelas})",
+                "${this.nama} ${this.kelas}",
                 style: TextStyle(color: this.textColor, fontSize: 16),
               ),
             ],
