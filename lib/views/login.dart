@@ -27,6 +27,7 @@ class _LoginState extends State<Login> {
         "username": username,
         "password": password
       };
+      print(HostAddress);
       var formData = FormData.fromMap(params);
       final response = await Dio().post(
         '$HostAddress/login',
@@ -91,11 +92,16 @@ class _LoginState extends State<Login> {
                 children: [
                   Center(
                     child: Container(
+                      width: 200,
                         margin: EdgeInsets.only(bottom: 10),
-                        child: CircleLogo(image: BaseAvatar)),
+                        child: Image.asset("assets/images/logo.png")),
                   ),
                   Text(
-                    "Selamat Datang Di Sistem Informasi Ujian Online",
+                    "Selamat Datang Di Aplikasi Tugas Sekolah",
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  ),
+                  Text(
+                    "TK AISYIYAH IV NGRINGO, KARANGANYAR",
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                   ),
                   Container(

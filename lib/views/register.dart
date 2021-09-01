@@ -32,6 +32,7 @@ class _RegisterState extends State<Register> {
         "tanggal_lahir": tanggal,
         "alamat": alamat
       };
+      print(data.toString());
       FormData formData = FormData.fromMap(data);
       final response = await Dio().post(
         url,
@@ -61,6 +62,7 @@ class _RegisterState extends State<Register> {
       print(response.data);
     } on DioError catch (e) {
       print(e.response!.data);
+      print(e);
       Fluttertoast.showToast(
           msg: "Registrasi Gagal. Mohon Lengkapi Data Dengan Benar...",
           toastLength: Toast.LENGTH_SHORT,

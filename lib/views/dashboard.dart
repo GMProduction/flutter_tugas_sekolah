@@ -391,7 +391,7 @@ class _DashboardState extends State<Dashboard> {
                                                     arguments:
                                                         e["id"].toString());
                                               },
-                                              child: CardMateri(
+                                              child: CardTugas(
                                                 nama: e["nama"].toString(),
                                                 deskripsi:
                                                     e["deskripsi"].toString(),
