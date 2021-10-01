@@ -11,7 +11,7 @@ class ProfileNavbar extends StatelessWidget {
   final Color textColor;
 
   const ProfileNavbar(
-      {Key? key,
+      {Key key,
       this.avatar = BaseAvatar,
       this.nama = 'Siswa',
       this.kelas = 'Kelas Siswa',

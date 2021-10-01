@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tugas_sekolah/helper/helper.dart';
-import 'package:video_player/video_player.dart';
 
 class DetailTugas extends StatefulWidget {
   @override
@@ -14,18 +13,17 @@ class DetailTugas extends StatefulWidget {
 }
 
 class _DetailTugasState extends State<DetailTugas> {
-  late VideoPlayerController _controller;
   bool isPlaying = false;
   bool isLoading = true;
   bool isLoadingUpload = false;
   Map<String, dynamic> _tugas = {};
   String _fileTugas = "Belum Ada File...";
-  PlatformFile? file;
+  PlatformFile file;
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance!.addPostFrameCallback((_) {
-      var id = ModalRoute.of(context)!.settings.arguments as String;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      var id = ModalRoute.of(context).settings.arguments as String;
       print(id);
       getDetailTugas(id);
     });
@@ -49,16 +47,7 @@ class _DetailTugasState extends State<DetailTugas> {
       setState(() {
         _tugas = response.data as Map<String, dynamic>;
       });
-      _controller =
-          VideoPlayerController.network("$HostFile${_tugas["url_video"]}")
-            ..addListener(() {
-              setState(() {
-                isPlaying = _controller.value.isPlaying;
-              });
-            })
-            ..initialize().then((_) {
-              setState(() {});
-            });
+
     } on DioError catch (e) {
       Fluttertoast.showToast(
           msg: "Terjadi Kesalahan Pada Server...",
@@ -76,7 +65,7 @@ class _DetailTugasState extends State<DetailTugas> {
   }
 
   void cariFile() async {
-    FilePickerResult? result = await FilePicker.platform.pickFiles();
+    FilePickerResult result = await FilePicker.platform.pickFiles();
     if (result != null) {
       setState(() {
         file = result.files.first;
@@ -99,7 +88,7 @@ class _DetailTugasState extends State<DetailTugas> {
         String token = preferences.getString("token") ?? "";
         print(token);
         FormData form = FormData.fromMap({
-          "url": await MultipartFile.fromFile(file!.path!, filename: file!.name)
+          "url": await MultipartFile.fromFile(file.path, filename: file.name)
         });
         final response = await Dio().post(
           url,
@@ -118,7 +107,7 @@ class _DetailTugasState extends State<DetailTugas> {
         );
         print(response.data);
       } on DioError catch (e) {
-        print(e.response!.data);
+        print(e.response.data);
         Fluttertoast.showToast(
             msg: "Terjadi Kesalahan Pada Server...",
             toastLength: Toast.LENGTH_SHORT,
@@ -147,25 +136,14 @@ class _DetailTugasState extends State<DetailTugas> {
   @override
   void dispose() {
     super.dispose();
-    _controller.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    print(_tugas.toString());
     return Scaffold(
       backgroundColor: Colors.white,
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          setState(() {
-            _controller.value.isPlaying
-                ? _controller.pause()
-                : _controller.play();
-          });
-        },
-        child: Icon(
-          isPlaying ? Icons.pause : Icons.play_arrow,
-        ),
-      ),
+     
       body: SafeArea(
         child: isLoading
             ? Container(
@@ -185,25 +163,13 @@ class _DetailTugasState extends State<DetailTugas> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
-                    child: _controller.value.isInitialized
-                        ? AspectRatio(
-                            aspectRatio: _controller.value.aspectRatio,
-                            child: Stack(
-                              alignment: Alignment.bottomCenter,
-                              children: [
-                                VideoPlayer(_controller),
-                                VideoProgressIndicator(
-                                  _controller,
-                                  allowScrubbing: true,
-                                ),
-                              ],
-                            ),
-                          )
+                    child: _tugas['url_video'] != null
+                        ? Container(width: double.infinity, child: Image.network(HostImage+_tugas['url_video']),)
                         : Container(
                             height: 200,
                             width: MediaQuery.of(context).size.width,
                             child: Center(
-                              child: Text("No Video Available"),
+                              child: Text("No Image"),
                             ),
                           ),
                   ),
@@ -279,7 +245,7 @@ class _DetailTugasState extends State<DetailTugas> {
                                     height: 14,
                                     width: 14,
                                     child: CircularProgressIndicator(
-                                      color: Colors.white,
+                                      // color: Colors.white,
                                     ),
                                   ),
                                   Text(

@@ -7,7 +7,7 @@ class CardAktivitas extends StatelessWidget {
   final List<dynamic> sholat;
 
   const CardAktivitas({
-    Key? key,
+    Key key,
     this.tanggal = "",
     this.surat = "Nama Mapel",
     this.sholat = const [],

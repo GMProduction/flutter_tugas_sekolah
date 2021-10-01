@@ -21,7 +21,7 @@ class _AktivitasBaruState extends State<AktivitasBaru> {
   String surat = "";
 
   void _simpan() async {
-    late List<String> _tmpSholat = [];
+    List<String> _tmpSholat = [];
     sholat.keys.forEach((element) {
       if (sholat[element] == true) {
         _tmpSholat.add(element);
@@ -55,7 +55,7 @@ class _AktivitasBaruState extends State<AktivitasBaru> {
       // );
       print(response.data);
     } on DioError catch (e) {
-      print(e.response!.data);
+      print(e.response.data);
       Fluttertoast.showToast(
           msg: "Terjadi Kesalahan Pada Server...",
           toastLength: Toast.LENGTH_SHORT,
@@ -191,7 +191,7 @@ class _AktivitasBaruState extends State<AktivitasBaru> {
                                 height: 14,
                                 width: 14,
                                 child: CircularProgressIndicator(
-                                  color: Colors.white,
+                                  // valueColor: Colors.white,
                                 ),
                               ),
                               SizedBox(

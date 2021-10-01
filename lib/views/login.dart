@@ -32,8 +32,11 @@ class _LoginState extends State<Login> {
       final response = await Dio().post(
         '$HostAddress/login',
         options: Options(
-          headers: {"Accept": "application/json"},
-        ),
+            followRedirects: false,
+            // will not throw errors
+            validateStatus: (status) => true,
+            headers: {'Accept': 'application/json'},
+            contentType: 'multipart/form-data'),
         data: formData,
       );
       final int code = response.data['status'] as int;
@@ -64,14 +67,14 @@ class _LoginState extends State<Login> {
       }
     } on DioError catch (e) {
       Fluttertoast.showToast(
-          msg: "Terjadi Kesalahan Pada Server...",
+          msg: e.toString(),
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.CENTER,
           timeInSecForIosWeb: 1,
           backgroundColor: Colors.black,
           textColor: Colors.white,
           fontSize: 16.0);
-      print(e.response);
+      print(e.toString());
     }
     setState(() {
       isLoading = false;
@@ -92,7 +95,7 @@ class _LoginState extends State<Login> {
                 children: [
                   Center(
                     child: Container(
-                      width: 200,
+                        width: 200,
                         margin: EdgeInsets.only(bottom: 10),
                         child: Image.asset("assets/images/logo.png")),
                   ),
@@ -162,7 +165,7 @@ class _LoginState extends State<Login> {
                                       width: 20,
                                       height: 20,
                                       child: CircularProgressIndicator(
-                                        color: Colors.white,
+                                        // color: Colors.white,
                                         strokeWidth: 1,
                                       ),
                                     ),

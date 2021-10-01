@@ -3,7 +3,7 @@ import 'package:charts_flutter/flutter.dart' as charts;
 
 class PointsLineChart extends StatelessWidget {
   final List<charts.Series<dynamic, DateTime>> seriesList;
-  final bool? animate;
+  final bool animate;
 
   PointsLineChart(this.seriesList, {this.animate});
 

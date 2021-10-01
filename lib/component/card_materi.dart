@@ -7,7 +7,7 @@ class CardMateri extends StatelessWidget {
   final String buttonText;
 
   const CardMateri({
-    Key? key,
+    Key key,
     this.deskripsi = "Nama Paket Ujian",
     this.nama = "Nama Mapel",
     this.buttonText = "",
@@ -98,7 +98,7 @@ class CardTugas extends StatelessWidget {
   final String buttonText;
 
   const CardTugas({
-    Key? key,
+    Key key,
     this.deskripsi = "Nama Paket Ujian",
     this.nama = "Nama Mapel",
     this.buttonText = "",

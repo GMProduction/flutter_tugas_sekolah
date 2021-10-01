@@ -8,7 +8,7 @@ class CardPencarianMateri extends StatelessWidget {
   final String tanggal;
 
   const CardPencarianMateri({
-    Key? key,
+    Key key,
     this.deskripsi = "Nama Paket Ujian",
     this.nama = "Nama Mapel",
     this.buttonText = "",
@@ -107,7 +107,7 @@ class CardPencarianTugas extends StatelessWidget {
   final String tanggal;
 
   const CardPencarianTugas({
-    Key? key,
+    Key key,
     this.deskripsi = "Nama Paket Ujian",
     this.nama = "Nama Mapel",
     this.buttonText = "",

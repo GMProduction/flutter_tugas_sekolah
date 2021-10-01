@@ -19,7 +19,7 @@ class _DashboardState extends State<Dashboard> {
   String avatar = BaseAvatar;
   String nama = "Nama Siswa";
   String kelas = "Kelas";
-  Map<String, dynamic>? _absen;
+  Map<String, dynamic> _absen;
   String _tglAbsen = "";
   bool isAbsen = false;
 
@@ -247,7 +247,7 @@ class _DashboardState extends State<Dashboard> {
                               child: GestureDetector(
                                 onTap: () {
                                   if (!isAbsen) {
-                                    absen(_absen!["id"] as int);
+                                    absen(_absen["id"] as int);
                                   }
                                 },
                                 child: Container(

@@ -19,7 +19,7 @@ class _WelcomeState extends State<Welcome> {
   void initSplash() async {
     await Future.delayed(const Duration(seconds: 2));
     SharedPreferences preferences = await SharedPreferences.getInstance();
-    String? token = preferences.getString("token");
+    String token = preferences.getString("token");
     if (token != null) {
       Navigator.popAndPushNamed(context, "/dashboard");
     } else {
@@ -34,8 +34,9 @@ class _WelcomeState extends State<Welcome> {
       backgroundColor: Colors.white,
       body: Center(
         child: Container(
+          width: 150,
           margin: EdgeInsets.only(bottom: 10),
-          child: CircleLogo(image: BaseAvatar),
+          child: Image.asset('assets/images/logo.png'),
         ),
       ),
     );

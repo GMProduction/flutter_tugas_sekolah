@@ -4,8 +4,8 @@ class CircleLogo extends StatelessWidget {
   final double size;
   final String image;
   const CircleLogo({
-    Key? key, 
-    required this.image, 
+    Key key,
+    this.image,
     this.size = 120
     }) : super(key: key);
 

@@ -43,7 +43,7 @@ class _AktivitasState extends State<Aktivitas> {
         _listAktivitas = response.data;
       });
     } on DioError catch (e) {
-      print(e.response!.data);
+      print(e.response.data);
       Fluttertoast.showToast(
           msg: "Gagal Mengambil Data...",
           toastLength: Toast.LENGTH_SHORT,

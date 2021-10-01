@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class BottomNavbar extends StatelessWidget {
   final int selected;
 
-  const BottomNavbar({Key? key, this.selected = 0}) : super(key: key);
+  const BottomNavbar({Key key, this.selected = 0}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -22,7 +22,7 @@ class BottomNavbar extends StatelessWidget {
         children: [
           GestureDetector(
             onTap: () {
-              String current = ModalRoute.of(context)!.settings.name!;
+              String current = ModalRoute.of(context).settings.name;
               if (current != "/dashboard") {
                 Navigator.pushNamed(context, "/dashboard");
               }
@@ -35,7 +35,7 @@ class BottomNavbar extends StatelessWidget {
           ),
           GestureDetector(
             onTap: () {
-              String current = ModalRoute.of(context)!.settings.name!;
+              String current = ModalRoute.of(context).settings.name;
               if (current != "/materi") {
                 Navigator.pushNamed(context, "/materi");
               }
@@ -48,7 +48,7 @@ class BottomNavbar extends StatelessWidget {
           ),
           GestureDetector(
             onTap: () {
-              String current = ModalRoute.of(context)!.settings.name!;
+              String current = ModalRoute.of(context).settings.name;
               if (current != "/tugas") {
                 Navigator.pushNamed(context, "/tugas");
               }
@@ -61,7 +61,7 @@ class BottomNavbar extends StatelessWidget {
           ),
           GestureDetector(
             onTap: () {
-              String current = ModalRoute.of(context)!.settings.name!;
+              String current = ModalRoute.of(context).settings.name;
               if (current != "/aktivitas") {
                 Navigator.pushNamed(context, "/aktivitas");
               }
@@ -74,7 +74,7 @@ class BottomNavbar extends StatelessWidget {
           ),
           GestureDetector(
             onTap: () {
-              String current = ModalRoute.of(context)!.settings.name!;
+              String current = ModalRoute.of(context).settings.name;
               if (current != "/profil") {
                 Navigator.pushNamed(context, "/profil");
               }

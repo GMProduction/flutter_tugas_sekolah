@@ -143,7 +143,7 @@ class _ProfilState extends State<Profil> {
             "Accept": "application/json"
           }));
       setState(() {
-        _avgNilai = response.data["avg"] as int;
+        // _avgNilai = response.data["avg"] as int;
       });
       print(response.data);
     } on DioError catch (e) {
@@ -269,7 +269,7 @@ class _ProfilState extends State<Profil> {
                                   width: 100,
                                   margin: EdgeInsets.only(right: 10),
                                   decoration: BoxDecoration(
-                                    color: Colors.lightBlue,
+                                    color: Colors.white12,
                                     borderRadius: BorderRadius.circular(5),
                                     image: DecorationImage(
                                       image: NetworkImage(avatar),
@@ -277,6 +277,7 @@ class _ProfilState extends State<Profil> {
                                     ),
                                   ),
                                 ),
+                                SizedBox(width: 15,),
                                 Expanded(
                                   child: Container(
                                     height: 100,
@@ -348,54 +349,56 @@ class _ProfilState extends State<Profil> {
                               ],
                             ),
                           ),
-                          Align(
-                            alignment: Alignment.center,
-                            child: Container(
-                              margin: EdgeInsets.only(bottom: 10),
-                              child: Column(
-                                children: [
-                                  Text("Nilai Rata - Rata"),
-                                  Text(
-                                    _avgNilai.toString(),
-                                    style: TextStyle(
-                                      fontSize: 36,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                          Container(
-                            margin: EdgeInsets.only(bottom: 10),
-                            padding: EdgeInsets.symmetric(horizontal: 20),
-                            child: isLoadingNilai
-                                ? Container(
-                                    width: MediaQuery.of(context).size.width,
-                                    height: 300,
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                        SizedBox(
-                                          height: 24,
-                                          width: 24,
-                                          child: CircularProgressIndicator(),
-                                        ),
-                                        SizedBox(
-                                          height: 5,
-                                        ),
-                                        Text("Sedang Mengunduh Data Nilai..."),
-                                      ],
-                                    ),
-                                  )
-                                : Container(
-                                    height: 300,
-                                    child: PointsLineChart(_createSampleData()),
-                                  ),
-                          ),
+                          // Align(
+                          //   alignment: Alignment.center,
+                          //   child: Container(
+                          //     margin: EdgeInsets.only(bottom: 10),
+                          //     child: Column(
+                          //       children: [
+                          //         Text("Nilai Rata - Rata"),
+                          //         Text(
+                          //           _avgNilai.toString(),
+                          //           style: TextStyle(
+                          //             fontSize: 36,
+                          //             fontWeight: FontWeight.bold,
+                          //           ),
+                          //         ),
+                          //       ],
+                          //     ),
+                          //   ),
+                          // ),
+                          // Container(
+                          //   margin: EdgeInsets.only(bottom: 10),
+                          //   padding: EdgeInsets.symmetric(horizontal: 20),
+                          //   child: isLoadingNilai
+                          //       ? Container(
+                          //           width: MediaQuery.of(context).size.width,
+                          //           height: 300,
+                          //           child: Column(
+                          //             mainAxisAlignment:
+                          //                 MainAxisAlignment.center,
+                          //             crossAxisAlignment:
+                          //                 CrossAxisAlignment.center,
+                          //             children: [
+                          //               SizedBox(
+                          //                 height: 24,
+                          //                 width: 24,
+                          //                 child: CircularProgressIndicator(),
+                          //               ),
+                          //               SizedBox(
+                          //                 height: 5,
+                          //               ),
+                          //               Text("Sedang Mengunduh Data Nilai..."),
+                          //             ],
+                          //           ),
+                          //         )
+                          //       : Container(
+                          //           height: 300,
+                          //           child: PointsLineChart(_createSampleData()),
+                          //         ),
+                          // ),
+                          SizedBox(height: 30,),
+
                           Container(
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -406,6 +409,7 @@ class _ProfilState extends State<Profil> {
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
+                                SizedBox(height: 15,),
                                 Container(
                                   margin: EdgeInsets.only(top: 5),
                                   child: Column(
@@ -428,11 +432,21 @@ class _ProfilState extends State<Profil> {
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
                                           children: [
-                                            Text(
-                                              e["tugas"]["nama"].toString(),
-                                              style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                              ),
+                                            Row(
+                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                              children: [
+                                                Text(
+                                                  e["tugas"]["nama"].toString(),
+                                                  style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                                ),
+                                                Text(
+                                                  e["nilai"] != null
+                                                      ? e["nilai"].toString()
+                                                      : "",  style: TextStyle(color: Colors.blueAccent, fontWeight: FontWeight.bold, fontSize: 20),
+                                                ),
+                                              ],
                                             ),
                                             SizedBox(
                                               height: 5,

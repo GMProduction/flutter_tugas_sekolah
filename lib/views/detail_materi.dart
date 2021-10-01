@@ -11,7 +11,7 @@ class DetailMateri extends StatefulWidget {
 }
 
 class _DetailMateriState extends State<DetailMateri> {
-  late VideoPlayerController _controller;
+  VideoPlayerController _controller;
   bool isPlaying = false;
   bool isLoading = true;
   Map<String, dynamic> _materi = {};
@@ -20,8 +20,8 @@ class _DetailMateriState extends State<DetailMateri> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance!.addPostFrameCallback((_) {
-      var id = ModalRoute.of(context)!.settings.arguments as String;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      var id = ModalRoute.of(context).settings.arguments as String;
       print(id);
       getDetailMateri(id);
     });

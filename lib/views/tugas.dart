@@ -44,7 +44,7 @@ class _TugasState extends State<Tugas> {
         _listTugas = response.data;
       });
     } on DioError catch (e) {
-      print(e.response!.data);
+      print(e.response.data);
       Fluttertoast.showToast(
           msg: "Gagal Mengambil Data...",
           toastLength: Toast.LENGTH_SHORT,
@@ -114,6 +114,7 @@ class _TugasState extends State<Tugas> {
               padding: EdgeInsets.symmetric(horizontal: 20),
               child: Text("Hasil Pencarian"),
             ),
+            SizedBox(height: 15,),
             Expanded(
               child: RefreshIndicator(
                 onRefresh: () async {

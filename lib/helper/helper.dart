@@ -1,7 +1,7 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
 const String BaseAvatar =
-    'https://user-images.githubusercontent.com/4462072/63714494-c4d9c880-c7f6-11e9-8940-5a9636ecba36.png';
+    'http://cdn.onlinewebfonts.com/svg/img_568656.png';
 //const String HostAddress = 'http://192.168.100.12:8000/api';
 //const String HostImage = "http://192.168.100.12:8000/";
 //const String HostFile = "http://192.168.100.12:8000/";
